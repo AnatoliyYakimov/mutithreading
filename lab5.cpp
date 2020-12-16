@@ -29,8 +29,8 @@ int main() {
 
     const double sortedChance = 0.5;
 
-    size_t total = 100000;
-    size_t elementCount = 10000;
+    size_t total = 100;
+    size_t elementCount = 1000;
     size_t sortedCount = 0;
 
     cout << "Initializing tree...\n";
@@ -55,7 +55,7 @@ int main() {
     cout << "Tree initialization complete\n";
     cout << "Initializing thread manager\n";
 
-    ThreadManager threadManager(1000);
+    ThreadManager threadManager(4);
 
     atomic<size_t> actualSortedCount = 0;
     atomic<size_t> tasksCompleted = 0;

@@ -8,7 +8,7 @@ using namespace std;
 mutex coutLock;
 random_device rd;
 mt19937 gen(rd());
-uniform_int_distribution<> dist(10, 400);
+uniform_int_distribution<> dist(1000, 2000);
 
 int main() {
     LockingStack<int> stack;
@@ -18,8 +18,8 @@ int main() {
             this_thread::sleep_for(chrono::milliseconds(dist(gen)));
             int value = id * count * 1000 + i;
             stack.push(value);
-            lock_guard<mutex> lock(coutLock);
-            cout << "Producer " << id << ": add " << value << endl;
+//            lock_guard<mutex> lock(coutLock);
+
         }
     };
 
@@ -35,7 +35,7 @@ int main() {
     vector<future<void>> producers;
     vector<future<void>> consumers;
 
-    int count = 1000;
+    int count = 20;
 
     for (int i = 1; i < 3; ++i) {
         producers.push_back(async(pushCallback, i, count));

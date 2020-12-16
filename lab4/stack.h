@@ -43,6 +43,7 @@ protected:
 template<typename T>
 void LockingStack<T>::push(T value) {
     unique_lock<mutex> lock(mtx);
+//    cout << "Producer " << ": add " << value << endl;
     internalVector->push_back(move(value));
     monitor.notify();
 }
@@ -52,6 +53,7 @@ T LockingStack<T>::pop() {
     unique_lock<mutex> lock(mtx);
     monitor.wait(lock, [this]{return internalVector->size() > 0;});
     T value = (*internalVector)[internalVector->size() - 1];
+//    cout << "Consumer " << ": pop " << value << endl;
     internalVector->pop_back();
     return move(value);
 }
